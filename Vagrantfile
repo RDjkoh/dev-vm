@@ -78,25 +78,31 @@ EOF
 	# Install git
 	sudo yum install -y git
 	
-	# Move SSH keys into the home .ssh folder
+	# Move SSH keys into the home .ssh folder and add Bitbucket repos as known hosts (to avoid RSA key prompt)
 	mv /home/vagrant/sync/id_rsa /home/vagrant/.ssh
 	mv /home/vagrant/sync/id_rsa.pub /home/vagrant/.ssh
 	chmod 600 /home/vagrant/.ssh/id_rsa
 	chown -R vagrant.vagrant /home/vagrant/.ssh/*
+	sudo tee /home/vagrant/.ssh/known_hosts > /dev/null << 'EOF'
+bitbucket.org,104.192.143.3 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAubiN81eDcafrgMeLzaFPsw2kNvEcqTKl/VqLat/MaB33pZy0y3rJZtnqwR2qOOvbwKZYKiEO1O6VqNEBxKvJJelCq0dTXWT5pbO2gDXC6h6QDXCaHo6pOHGPUy+YBaGQRGuSusMEASYiWunYN0vCAI8QaXnWMXNMdFP3jHAJH0eDsoiGnLPBlBp4TNm6rYI74nMzgz3B9IikW4WVK+dc8KZJZWYjAuORU3jc1c/NPskD2ASinf8v3xnfXeukU0sJ5N6m5E8VLjObPEO+mN2t/FZTMZLiFqPWc/ALSqnMnnhwrNi2rbfg/rd/IpL8Le3pSBne8+seeFVBoGqzHM9yXw==
+EOF
+	chmod 644 /home/vagrant/.ssh/known_hosts
+	chown vagrant.vagrant /home/vagrant/.ssh/known_hosts
 	
 	# Create folders for git repos
-	# Business User Portal
 	mkdir -p /home/vagrant/git/BUP
-	cd /home/vagrant/git/BUP
-	git init
-	git remote add master git@bitbucket.org:RD-BUSI/bup.git 
-	git pull master master
-	# REST API 
 	mkdir -p /home/vagrant/git/REST_API
+	sudo chown -R vagrant.vagrant /home/vagrant/git/
+	# Business User Portal
+	cd /home/vagrant/git/BUP
+	sudo -u vagrant git init
+	sudo -u vagrant git remote add master git@bitbucket.org:RD-BUSI/bup.git 
+	sudo -u vagrant git pull master master
+	# REST API 
 	cd /home/vagrant/git/REST_API
-	git init
-	git remote add master git@bitbucket.org:RD-BUSI/rest_api.git
-	git pull master master
+	sudo -u vagrant git init
+	sudo -u vagrant git remote add master git@bitbucket.org:RD-BUSI/rest_api.git
+	sudo -u vagrant git pull master master
 	
 	# Install Docker
 sudo tee /etc/yum.repos.d/docker.repo <<-'EOF'
