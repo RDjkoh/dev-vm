@@ -1,4 +1,4 @@
-# BUSI Vagrant Dev VM
+# Vagrant Dev VM
 
 ## Installation
 ### Prerequisites 
