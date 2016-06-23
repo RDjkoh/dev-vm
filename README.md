@@ -26,7 +26,7 @@ Edit this Vagrantfile. Find and replace "rsync" to "virtualbox". The edited line
 3. Create a folder. This folder will represent this dev VM. Go to this newly made folder location in Git Bash. Initialize a git repo by running:
 `git init`
 4. Pull from the dev VM git repo by running:  
-`git pull https://github.com/johnkohdotca/dev-vm.git` or `git pull git@bitbucket.org:RD-BUSI/dev_vm.git` 
+`git pull https://github.com/johnkohdotca/dev-vm.git` 
 5. Copy your SSH keys into this folder. Name your public SSH key to id\_rsa.pub and your private SSH key id\_rsa.
 6. Run the command `vagrant up`. It takes about 10-15 minutes for everything to download and install.
 7. Once everything finishes, run `vagrant ssh` to SSH into the machine. You can access stuff at these locations:
@@ -44,4 +44,4 @@ Elastic at http://localhost:9200/_plugin/hq/#cluster
 ## Issues
 Stopping/starting the VM rapidly may cause Vagrant to be confused about the state of forwarded ports. If this happens, shutdown the VM, wait (5 minutes) and try again. 
 
-It may get stuck at "Building the VirtualBox Guest Additions kernel modules". If it's unresponsive, break out, run "vagrant destroy" and re-initialize the VM.
+It may get stuck at `Building the VirtualBox Guest Additions kernel modules`. If it's unresponsive, break out, run `vagrant destroy` and re-initialize the VM.
