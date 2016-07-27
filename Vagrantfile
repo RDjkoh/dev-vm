@@ -14,6 +14,9 @@ Vagrant.configure("2") do |config|
     sudo yum install -y wget
     wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.rpm"
     sudo yum --nogpgcheck localinstall -y jdk-8u66-linux-x64.rpm
+	
+	# xsltproc
+	sudo yum install -y libxslt
 
     # Grab ES 2.0
     rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
@@ -122,7 +125,10 @@ EOF
 	sudo service docker start
 	
     # Start ES
-    sudo service elasticsearch start
+	# Comment service script for now and let the script handle it. 
+	sudo service elasticsearch start
+	cd /home/vagrant/sync/elasticSearchData/scripts/
+	./startElasticSearch.sh
 	
 	# Start Kibana
 	sudo service kibana start
